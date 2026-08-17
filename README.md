@@ -1,2 +1,2 @@
 # CRUDALNT2
-CRUD Alunos ADS T2
+CRUD Aluno ADS T2
