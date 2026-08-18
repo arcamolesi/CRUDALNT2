@@ -3,6 +3,7 @@ using CRUDALNT2.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRUDALNT2.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260818013404_curso")]
+    partial class curso
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,8 +32,10 @@ namespace CRUDALNT2.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<int>("cursoid")
-                        .HasColumnType("int");
+                    b.Property<string>("curso")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("idade")
                         .HasColumnType("int");
@@ -44,8 +49,6 @@ namespace CRUDALNT2.Migrations
                         .HasColumnType("real");
 
                     b.HasKey("id");
-
-                    b.HasIndex("cursoid");
 
                     b.ToTable("aluno");
                 });
@@ -76,17 +79,6 @@ namespace CRUDALNT2.Migrations
                     b.HasKey("id");
 
                     b.ToTable("curso");
-                });
-
-            modelBuilder.Entity("CRUDALNT2.Models.Aluno", b =>
-                {
-                    b.HasOne("CRUDALNT2.Models.Curso", "curso")
-                        .WithMany()
-                        .HasForeignKey("cursoid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("curso");
                 });
 #pragma warning restore 612, 618
         }
