@@ -33,6 +33,31 @@ namespace CRUDALNT2.Controllers
             return View(await appDbContext.ToListAsync());
         }
 
+       // GET: Alunos/Create
+        [HttpGet]
+        public IActionResult Create()
+        {
+            ViewData["cursoid"] = new SelectList(contexto.Cursos, "id", "descricao");
+            return View();
+        }
+
+       // POST: Teste/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("id,nome,idade,cursoid,nota")] Aluno aluno)
+        {
+            if (ModelState.IsValid)
+            {
+                
+                contexto.Add(aluno);
+                await contexto.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["cursoid"] = new SelectList(contexto.Cursos, "id", "descricao", aluno.cursoid);
+            return View(aluno);
+        }
 
     }
 }

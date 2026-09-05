@@ -46,6 +46,7 @@ namespace CRUDALNT2.Controllers
         }
 
         // GET: Alunos/Create
+        [HttpGet]
         public IActionResult Create()
         {
             ViewData["cursoid"] = new SelectList(_context.Cursos, "id", "area");
